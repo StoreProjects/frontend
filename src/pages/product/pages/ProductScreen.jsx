@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listOneProduct } from '../../../redux/actions/product';
 
 export default function ProductScreen() {
     const params = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const state = useSelector((state) => state.productListOne);
     const { loading, error, product } = state;
@@ -12,6 +13,10 @@ export default function ProductScreen() {
     useEffect(() => {
         dispatch(listOneProduct(String(params.id)))
     }, [dispatch, params.id]);
+
+    const AddToCartHandle = () => {
+        navigate(`/cart/${ product._id }?qty=${ qty }`);
+    }
     return (
         <>
             {
@@ -55,7 +60,7 @@ export default function ProductScreen() {
                                             }
                                         </select>
 
-                                        <button className='mt-5 w-full transition ease-out bg-green-500 hover:bg-green-700 duration-300 text-white font-bold py-2 px-4 rounded'>
+                                        <button onClick={AddToCartHandle} className='mt-5 w-full transition ease-out bg-green-500 hover:bg-green-700 duration-300 text-white font-bold py-2 px-4 rounded'>
                                             Añadir al carro
                                         </button>
                                     </div>

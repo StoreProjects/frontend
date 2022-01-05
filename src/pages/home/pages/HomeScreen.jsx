@@ -6,7 +6,7 @@ import { Product } from '../../product/components/Product';
 export default function HomeScreen() {
     const dispatch = useDispatch();
     const productList = useSelector((state) => state.productList);
-    const { products } = productList;
+    const { products, loading, error } = productList;
     useEffect(() => {
         dispatch(listProducts());
     }, [dispatch]);
@@ -35,9 +35,12 @@ export default function HomeScreen() {
             <div className='container mx-auto px-4'>
                 <div className='flex flex-col lg:flex-row'>
                 {
-                    products?.map((product) => (
-                        <Product key={product._id} product={product} />
-                    ))
+                    loading ? (<div>Cargando...</div>) : error ? (<div>{error}</div>) : 
+                    (
+                        products?.map((product) => (
+                            <Product key={product._id} product={product} />
+                        ))
+                    )
                 }
                 </div>
             </div>
