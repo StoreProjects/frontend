@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.wrapper{
+  position: relative;
+  }
+  .wrapper span{
+  position: absolute;
+  top: -2px;
+  right: -2px; 
+  }

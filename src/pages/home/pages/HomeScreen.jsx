@@ -12,12 +12,15 @@ export default function HomeScreen() {
     }, [dispatch]);
     return (
         <>
-            <div className='flex my-20 mx-16'>
-                <div>
-                    <p className='text-7xl font-light mb-10'>
+            <div className='
+                flex flex-col my-20 mx-16
+                md:flex-row
+            '>
+                <div className='order-2 md:order-1'>
+                    <p className='text-base md:text-7xl font-light mb-10'>
                         Más de 1500 productos
                     </p>
-                    <p className='mt-4 text-lg mb-5'>
+                    <p className='text-base md:text-lg mt-4 mb-5'>
                         En <b>Shopping Star</b> puedes comprar y vender lo que desees.<br />
                         Agrega nuevas categorías. Rankea las compras. Recibe
                         notificaciones.
@@ -28,7 +31,7 @@ export default function HomeScreen() {
                         Empezar a explorar
                     </button>
                 </div>
-                <div>
+                <div className='order-1 mb-8 md:mb-0 md:order-2'>
                     <img src={shopping} alt="" />
                 </div>
             </div>
