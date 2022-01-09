@@ -6,6 +6,7 @@ module.exports = {
     extend: {},
     fontFamily: {
       'body': ['"Bungee"'],
+      'open': ['"Open Sans"', 'sans-serif']
     }
   },
   plugins: [],

@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../redux/actions/cart';
+import { Item } from '../components/Item';
 export default function CartScreen() {
     const params = useParams();
     const dispatch = useDispatch();
@@ -14,11 +15,17 @@ export default function CartScreen() {
 
     const cart = useSelector((state) => state.cart);
     const { cartItems, error } = cart;
+
+    const precioTotal = cartItems.reduce((a, c) => a + (c.price.$numberDecimal * c.qty), 0).toFixed(2);
+    const descuento = 0.00;
+    const total = (precioTotal - (precioTotal * descuento)).toFixed(2);
     useEffect(() => {
         if (productId) {
             dispatch(addToCart(productId, qty));
         }
     }, [dispatch, productId, qty]);
+    
+    
     return (
         <div className='container mx-auto px-4'>
             {
@@ -30,65 +37,69 @@ export default function CartScreen() {
                         Cart is empty. <Link to="/">Go shopping</Link>
                     </div>
                 ) : (
-                    <div className='flex flex-row gap-x-5 mt-10'>
-                        <div className='w-9/12 flex flex-col'>
-                            <div className='flex justify-between'>
-                                <p className='font-semibold text-2xl'>Shipping Cart</p>
-                                <p className='text-lg text-gray-600 font-semibold'>Precio</p>
+                    <div className='container mx-auto font-open my-10'>
+                        <div className='
+                        flex flex-col gap-y-5
+                        lg:flex-row lg:gap-x-8 lg:gap-y-0
+                        '>
+                            <div
+                                style={{ height: '26rem' }}
+                                className='
+                                w-full bg-white rounded-lg shadow-xl overflow-auto
+                                lg:w-9/12
+                                '>
+                                <table className='table-auto'>
+                                    <thead>
+                                        <tr>
+                                            <th className='text-gray-400 text-left pl-5 pt-5'>Producto</th>
+                                            <th className='text-gray-400 text-left pl-32 lg:pl-5 pt-5'>Cantidad</th>
+                                            <th className='text-gray-400 text-left pl-5 pt-5'>Precio</th>
+                                            <th className='text-gray-400 text-left pl-5 pt-5'>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            cartItems.map((item, index) => (
+                                                <Item item={ item } key={index} />
+                                            ))
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
-                            <div className='w-full h-1 my-4 bg-gray-300'></div>
-                            {
-                                cartItems.map((item, index) => (
-                                    <div key={index} className='flex flex-row mt-10 gap-x-10'>
-                                        
-                                        <div>
-                                            <img
-                                                src={`${process.env.PUBLIC_URL}/img/${item.image}`}
-                                                alt="img_product"
-                                                className='w-40'
-                                            />
-                                        </div>
-                                        <div>
-                                            <p className='text-xl font-semibold text-blue-600'>{item.name.toUpperCase()}</p>
-                                            {item.qty > 0 && <p className='text-xs my-2 text-green-600'>Disponible</p>}
-                                            <select
-                                                value={item.qty}
-                                                onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
-                                                className='mt-5 block h-12 w-36 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-                                            >
-                                                {
-                                                    [...Array(item.countInStock).keys()].map(x =>
-                                                        <option key={x + 1} value={x + 1}>{x + 1}</option>
-                                                    )
-                                                }
-                                            </select>
-                                            <button
-                                                type='button'
-                                                className='mt-2 bg-red-400 w-36 hover:bg-red-900 text-white font-bold py-2 px-4 rounded'
-                                            >
-                                                Eliminar
-                                            </button>
-                                        </div>
-                                        <div className='ml-auto mr-0'>
-                                            <p className='font-semibold text-2xl text-right'>US$ { item.price.$numberDecimal }</p>
+
+                            <div className='w-full lg:w-3/12'>
+                                <div className='flex flex-col gap-y-5'>
+                                    <div className='w-full rounded-lg bg-white shadow-xl'>
+                                        <div className='mx-5 my-5'>
+                                            <div className='mb-5'>
+                                                <p className=''>Tiene cupon?</p>
+                                            </div>
+                                            <div>
+                                                <input type="text"
+                                                    className='shadow appearance-none border rounded-l-lg w-8/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                                    placeholder='Cupon...'
+                                                />
+                                                <button type='button'
+                                                    className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r-lg'
+                                                >Aplicar</button>
+                                            </div>
                                         </div>
                                     </div>
-                                ))
-                            }
-                        </div>
-                        <div className='w-3/12 bg-gray-200 h-full text-center py-5 px-10'>
-                            <span className='text-gray-900 font-semibold'>
-                                Cart Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) :
-                            </span>
-                            <strong className='text-lg'> $ {cartItems.reduce((a, c) => a + (c.price.$numberDecimal * c.qty), 0).toFixed(2)}</strong>
-                            <button
-                                type='button'
-                                className='mt-5 bg-green-500 w-full hover:bg-green-700 text-white font-bold py-2 px-4 rounded'
-                            >
-                                Proceder al pago
-                            </button>
-                            <div className='mt-5'>
-                                <p>Productos recomendados</p>
+
+                                    <div className='w-full rounded-lg bg-white shadow-xl'>
+                                        <div className='flex flex-col gap-y-5 mx-5 my-5'>
+                                            <p className='font-semibold'>Precio Total: <span className='font-extrabold ml-3'>{'$' + cartItems.reduce((a, c) => a + (c.price.$numberDecimal * c.qty), 0).toFixed(2)}</span></p>
+                                            <p className='font-semibold'>Descuento: <span className='font-extrabold text-red-600 ml-3'>{'$' + descuento}</span></p>
+                                            <p className='font-semibold'>Total: <span className='font-extrabold ml-3'>{'$' + total}</span></p>
+                                            <button type='button'
+                                                className='transition ease-in-out bg-green-500 hover:bg-green-700 hover:scale-110 text-white font-bold py-2 px-4 rounded duration-300'
+                                            >Proceder</button>
+                                            <Link to='/'
+                                                className='text-center transition ease-in-out bg-yellow-500 hover:bg-yellow-700 hover:scale-110 text-white font-bold py-2 px-4 rounded duration-300'
+                                            >Seguir comprando</Link>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

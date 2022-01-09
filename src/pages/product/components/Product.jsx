@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 export const Product = ({ product }) => {
     return (
-        <div className="transition ease-out max-w-sm rounded overflow-hidden shadow-2xl hover:shadow-green-500 duration-300">
+        <div className="transition ease-out max-w-sm bg-white rounded overflow-hidden shadow-2xl hover:shadow-green-500 duration-300">
             <img className="w-3/4 mx-12" src={`${process.env.PUBLIC_URL}/img/${product.image}`} alt="Sunset in the mountains" />
             <div className='flex flex-col mx-10 my-5'>
 
