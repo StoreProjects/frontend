@@ -6,11 +6,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
-.wrapper{
+.wrapper
+{
   position: relative;
-  }
-  .wrapper span{
+}
+.wrapper span
+{
   position: absolute;
   top: -2px;
   right: -2px; 
-  }
+}
+
+.checkout-steps > div
+{
+  border-top: 0.3rem #c0c0c0 solid;
+  color: #c0c0c0;
+  flex: 1;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.checkout-steps > div.active 
+{
+  border-top-color: rgb(34, 197, 94);
+  color: rgb(34, 197, 94);
+}

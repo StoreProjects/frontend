@@ -48,7 +48,7 @@ export default function ProductScreen() {
                                 </div> 
                                 <div className='w-full lg:w-80'>
                                     <div className='w-full border-2 rounded-lg p-7 bg-white'>
-                                        <p className='my-3 text-xl'><strong>Precio: </strong>{'$' + product.price.$numberDecimal}</p>
+                                        <p className='my-3 text-xl'><strong>Precio: </strong>{'$' + product.price}</p>
                                         <p className={`my-3 text-xl ${product.stock > 0 ? 'text-black' : 'text-red-600'}`}><strong className='text-black'>Estado: </strong>{product.stock > 0 ? 'En stock' : 'Sin stock'}</p>
                                         <strong className='text-xl'>Cantidad: </strong>
                                         <select

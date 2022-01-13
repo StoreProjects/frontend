@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from 'react-router-dom';
 export const Product = ({ product }) => {
     return (
-        <div className="transition ease-out max-w-sm bg-white rounded overflow-hidden shadow-2xl hover:shadow-green-500 duration-300">
-            <img className="w-3/4 mx-12" src={`${process.env.PUBLIC_URL}/img/${product.image}`} alt="Sunset in the mountains" />
-            <div className='flex flex-col mx-10 my-5'>
+        <div style={{ height: '35rem' }} className="flex flex-col w-full md:w-6/12 transition ease-out max-w-sm bg-white rounded overflow-hidden shadow-2xl hover:shadow-green-500 duration-300">
+            <img style={{ width: '75%', height: '20rem' }} className="mx-12" src={`${process.env.PUBLIC_URL}/img/${product.image}`} alt="Sunset in the mountains" />
+            <div className='flex flex-col mx-10 my-5 flex-1'>
 
                 <div className="flex-none w-full text-center">
                     <div className="font-bold text-base mb-2">
@@ -13,7 +13,7 @@ export const Product = ({ product }) => {
                     </div>
                 </div>
                 <div className='flex-initial w-full'>
-                    <p className='text-green-500 font-semibold text-center text-2xl'>${product.price.$numberDecimal}</p>
+                    <p className='text-green-500 font-semibold text-center text-2xl'>${ product.price }</p>
                 </div>
             </div>
             <Link

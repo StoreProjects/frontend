@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../redux/actions/cart';
@@ -7,6 +7,7 @@ import { Item } from '../components/Item';
 export default function CartScreen() {
     const params = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { search } = useLocation();
     const { id: productId } = params;
@@ -16,7 +17,7 @@ export default function CartScreen() {
     const cart = useSelector((state) => state.cart);
     const { cartItems, error } = cart;
 
-    const precioTotal = cartItems.reduce((a, c) => a + (c.price.$numberDecimal * c.qty), 0).toFixed(2);
+    const precioTotal = cartItems.reduce((a, c) => a + (c.price * c.qty), 0).toFixed(2);
     const descuento = 0.00;
     const total = (precioTotal - (precioTotal * descuento)).toFixed(2);
     useEffect(() => {
@@ -25,7 +26,9 @@ export default function CartScreen() {
         }
     }, [dispatch, productId, qty]);
     
-    
+    const checkoutHandler = () => {
+        navigate('/login?redirect=/shipping');
+    }
     return (
         <div className='container mx-auto px-4'>
             {
@@ -88,10 +91,10 @@ export default function CartScreen() {
 
                                     <div className='w-full rounded-lg bg-white shadow-xl'>
                                         <div className='flex flex-col gap-y-5 mx-5 my-5'>
-                                            <p className='font-semibold'>Precio Total: <span className='font-extrabold ml-3'>{'$' + cartItems.reduce((a, c) => a + (c.price.$numberDecimal * c.qty), 0).toFixed(2)}</span></p>
+                                            <p className='font-semibold'>Precio Total: <span className='font-extrabold ml-3'>{'$' + cartItems.reduce((a, c) => a + (c.price * c.qty), 0).toFixed(2)}</span></p>
                                             <p className='font-semibold'>Descuento: <span className='font-extrabold text-red-600 ml-3'>{'$' + descuento}</span></p>
                                             <p className='font-semibold'>Total: <span className='font-extrabold ml-3'>{'$' + total}</span></p>
-                                            <button type='button'
+                                            <button type='button' onClick={checkoutHandler}
                                                 className='transition ease-in-out bg-green-500 hover:bg-green-700 hover:scale-110 text-white font-bold py-2 px-4 rounded duration-300'
                                             >Proceder</button>
                                             <Link to='/'

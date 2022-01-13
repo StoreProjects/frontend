@@ -23,7 +23,7 @@ export const Navbar = () => {
         }
     }
     return (
-        <main>
+        <main className='flex flex-col min-h-screen'>
             <nav className='bg-slate-50 p-6'>
                 <i 
                     className="md:hidden fas fa-align-justify text-green-600 mb-8" 
@@ -87,7 +87,7 @@ export const Navbar = () => {
                     </button>
                 </div>
             </nav>
-            <section>
+            <section className='flex-1'>
                 <Outlet />
             </section>
             <footer className='w-full bg-green-500 mt-10'>

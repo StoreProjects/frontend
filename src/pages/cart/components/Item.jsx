@@ -45,7 +45,7 @@ export const Item = ({ item }) => {
             </td>
             <td>
                 <div className='mx-5'>
-                    <p className='font-extrabold'>{'$' + item.price.$numberDecimal}</p>
+                    <p className='font-extrabold'>{ '$' + item.price }</p>
                 </div>
             </td>
             <td>
