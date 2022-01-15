@@ -8,6 +8,8 @@ import PaymentScreen from './pages/payment/pages/PaymentScreen';
 import ProductScreen from './pages/product/pages/ProductScreen';
 import RegisterScreen from './pages/register/pages/RegisterScreen';
 import ShippingScreen from './pages/shipping/pages/ShippingScreen';
+import DashboardScreen from './admin/pages/dashboard/DashboardScreen';
+
 import { Navbar } from './shared/navbar/Navbar';
 // REACT-TOASTIFY
 import { ToastContainer } from 'react-toastify';
@@ -32,6 +34,7 @@ function App() {
           <Route path='/payment' element={ <PaymentScreen /> } />
           <Route path='/placeOrder' element={ <PlaceOrderScreen /> } />
           <Route path='/orderDetail/:id' element={ <OrderDetailScreen /> } />
+          <Route path='/admin' element={ <DashboardScreen /> } />
         </Route>
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
