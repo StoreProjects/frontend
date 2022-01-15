@@ -1,45 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { signin } from '../../../redux/actions/user';
 export default function LoginScreen() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const userSignin = useSelector((state) => state.userSignin);
-
-    const { loading, error, userInfo } = userSignin;
-    const [state, setstate] = useState({
-        email: '',
-        password: ''
-    });
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState('');
 
     const { search } = useLocation();
     const redirectInUrl = new URLSearchParams(search).get('redirect');
     const redirect = redirectInUrl ? redirectInUrl : '/';
-    const onChange = (e) => {
-        setstate({
-            ...state,
-            [e.target.name]: e.target.value
-        });
-    }
+    
     const loginCallback = (e) => {
         e.preventDefault();
-        dispatch(signin(state.email, state.password));
+        dispatch(signin( email, password ))
+            .then(() => {
+                setIsLoggedIn( true );
+                window.location.reload();
+            });
     }
     
-    useEffect(() => {
-        if (userInfo && !error) {
-          navigate(redirect);
-        }
-    }, [navigate, redirect, userInfo, dispatch]);
+    if ( isLoggedIn ) {
+        navigate(redirect, { replace: true });
+    }
     return (
         <div className='container flex mx-auto justify-center'>
-            {
-                loading && (<div>Cargando...</div>)
-            }
-            {
-                error && (<div>Error: {error}</div>)
-            }
+            
             <div className='w-5/12 h-full mt-10'>
                 <form onSubmit={loginCallback} className='w-full h-96 bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4'>
                     <div className='mt-3'>
@@ -50,8 +38,8 @@ export default function LoginScreen() {
                             type="text"
                             name="email"
                             placeholder='email'
-                            value={state.email}
-                            onChange={onChange}
+                            value={email}
+                            onChange={({ target }) => setEmail( target.value )}
                             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                         />
                     </div>
@@ -64,8 +52,8 @@ export default function LoginScreen() {
                             type="password"
                             placeholder='Contraseña'
                             name="password"
-                            value={state.password}
-                            onChange={onChange}
+                            value={ password }
+                            onChange={ ({ target }) => setPassword(target.value) }
                             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                         />
                     </div>
