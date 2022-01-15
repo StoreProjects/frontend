@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {AgGridColumn, AgGridReact} from 'ag-grid-react';
+import { useDispatch, useSelector } from "react-redux";
 import LoginScreen from "../login/LoginScreen";
+import { listProducts } from '../../../redux/actions/product';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 const DashboardScreen = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  const { products, loading, error } = productList;
+
+  useEffect(() => {
+    dispatch(listProducts());
+}, [dispatch]);
+
   return isLoggedIn ? (
     <LoginScreen />
   ) : (
