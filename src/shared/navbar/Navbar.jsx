@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { Footer } from '../footer/Footer';
 import { logout } from '../../redux/actions/user';
 export const Navbar = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const userSignin = useSelector((state) => state.userSignin);
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
@@ -13,7 +14,9 @@ export const Navbar = () => {
     const [toggle, setToggle] = useState(false);
 
     const logoutHandle = () => {
-        dispatch(logout());
+        dispatch(logout()).then(() => {
+            navigate('/login');
+        })
     }
     const navToggle = () => {
         if ( toggle ) {
@@ -22,6 +25,7 @@ export const Navbar = () => {
             setToggle(true);
         }
     }
+
     return (
         <main className='flex flex-col min-h-screen'>
             <nav className='bg-slate-50 p-6'>

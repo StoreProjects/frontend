@@ -13,6 +13,7 @@ import { Navbar } from './shared/navbar/Navbar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import OrderDetailScreen from './pages/order/pages/OrderDetailScreen';
+
 function App() {
   return (
     <Router>
@@ -30,7 +31,7 @@ function App() {
           <Route path='/shipping' element={ <ShippingScreen /> } />
           <Route path='/payment' element={ <PaymentScreen /> } />
           <Route path='/placeOrder' element={ <PlaceOrderScreen /> } />
-          <Route path='/order/:id' element={ <OrderDetailScreen /> } />
+          <Route path='/orderDetail/:id' element={ <OrderDetailScreen /> } />
         </Route>
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>

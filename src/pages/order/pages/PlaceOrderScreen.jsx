@@ -47,7 +47,7 @@ export default function PlaceOrderScreen() {
             });
         }
 
-    }, [success, order, navigate]);
+    }, [success, order, navigate, dispatch]);
     return (
         <div className='flex flex-col'>
             <CheckoutSteps step1 step2 step3 step4 />
