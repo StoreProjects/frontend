@@ -14,3 +14,5 @@ Tienda online
 ![Captura de pantalla 2022-01-08 203836](https://user-images.githubusercontent.com/64493192/148666045-67840af5-dc46-4cc1-9ec8-bf2e6a3f5233.png)
 
 ![detalle](https://user-images.githubusercontent.com/64493192/149409553-0d1987bf-5912-4768-9712-6b3b5443a285.png)
+
+![OrderDetail](https://user-images.githubusercontent.com/64493192/149634299-fbd01e7a-f4da-416c-acf4-87130fbcc6f6.png)
