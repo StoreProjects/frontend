@@ -15,6 +15,8 @@ import { UserSidebar } from './components/user/UserSidebar';
 import OrderDetailScreen from './pages/order/pages/OrderDetailScreen';
 //import UserScreen from './pages/user/pages/home-user/indexScreen';
 //import indexScreen from './pages/user/pages/home-user/indexScreen';
+import DashboardScreen from './pages/admin/pages/dashboard/DashboardScreen';
+
 // REACT-TOASTIFY
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -39,14 +41,15 @@ function App() {
             <Route path='/placeOrder' element={<PlaceOrderScreen />} />
             <Route path='/orderDetail/:id' element={<OrderDetailScreen />} />
             <Route path='/history' element={<OrderHistoryScreen />} />
+            <Route path='/admin' element={ <DashboardScreen /> } />
             <Route path='/user/profile' element={<UserSidebar />} >
               <Route index element={<indexScreen />} />
             </Route>
           </Route>
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
-        <ToastContainer />
       </SocketProvider>
+      <ToastContainer />
     </Router>
   )
 }
