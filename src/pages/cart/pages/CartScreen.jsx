@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../redux/actions/cart';
-import { Item } from '../components/Item';
+import { Item } from '../../../components/cart/Item';
 export default function CartScreen() {
     const params = useParams();
     const dispatch = useDispatch();

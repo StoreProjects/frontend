@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 // SCREEMS & COMPONENTS
 import { listProducts } from '../../../redux/actions/product';
 import shopping from '../../../assets/images/shopping.svg';
-import { Product } from '../../product/components/Product';
+import { Product } from '../../../components/product/';
 import { MessageBox } from '../../../shared/messagebox/MessageBox';
 import LoadingBox from '../../../shared/loadingbox/LoadingBox';
 export default function HomeScreen() {
@@ -43,7 +43,7 @@ export default function HomeScreen() {
                 {
                     loading ? (<LoadingBox />) : error ? (<MessageBox >{ error }</MessageBox>) : 
                     (
-                        products?.map((product) => (
+                        products.map((product) => (
                             <Product key={product._id} product={product} />
                         ))
                     )

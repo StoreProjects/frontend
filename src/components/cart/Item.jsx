@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addToCart, removeFromCart } from '../../../redux/actions/cart';
+import { addToCart, removeFromCart } from '../../redux/actions/cart';
 export const Item = ({ item }) => {
     //const { name, price, product, image, qty, countInStock } = props;
     const dispatch = useDispatch();

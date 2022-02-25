@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listOneProduct } from '../../../redux/actions/product';
-
+import { Comment, CommentForm } from '../../../components/product';
 export default function ProductScreen() {
     const params = useParams();
     const navigate = useNavigate();
@@ -66,6 +66,17 @@ export default function ProductScreen() {
                                         <button onClick={AddToCartHandle} className='mt-5 w-full transition ease-out bg-green-500 hover:bg-green-700 duration-300 text-white font-bold py-2 px-4 rounded'>
                                             Añadir al carro
                                         </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='container mx-auto mt-10'>
+                                <div className='flex flex-col justify-center mx-7'>
+                                    <div className='h-full text-center'>
+                                        <p className='font-semibold text-2xl'>Comentarios (1)</p>
+                                    </div>
+                                    <div className='flex flex-col my-5'>
+                                        <CommentForm />
+                                        <Comment /> 
                                     </div>
                                 </div>
                             </div>

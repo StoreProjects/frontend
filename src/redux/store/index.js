@@ -8,7 +8,7 @@ import thunk from 'redux-thunk'; //Allows to do AJAX request in our redux action
 import { productListReducer, productListOneReducer } from '../reducers/product';
 import { cartReducer } from '../reducers/cart';
 import { userLoginReducer } from '../reducers/user';
-import { orderCreateReducer, orderDetailsReducer, orderPayReducer } from '../reducers/order';
+import { orderCreateReducer, orderDetailsReducer, orderMineListReducer, orderPayReducer } from '../reducers/order';
 const initialState = {
     userSignin: {
         userInfo: localStorage.getItem('userInfo')
@@ -21,7 +21,13 @@ const initialState = {
             : [],
         shippingAddress: localStorage.getItem('shippingAddress')
             ? JSON.parse(localStorage.getItem('shippingAddress'))
-            : {},
+            : {
+                fullName: '',
+                address: '',
+                city: '',
+                postalCode: '',
+                country: ''
+            },
         paymentMethod: 'Paypal'
     }
 };
@@ -33,7 +39,8 @@ const reducer = combineReducers({
     userSignin: userLoginReducer,
     orderCreate: orderCreateReducer,
     orderDetails: orderDetailsReducer,
-    orderPay: orderPayReducer
+    orderPay: orderPayReducer,
+    orderMineList: orderMineListReducer
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

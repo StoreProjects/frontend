@@ -1,55 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { PayPalButton } from 'react-paypal-button-v2';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { detailsOrder, payOrder } from '../../../redux/actions/order';
 import LoadingBox from '../../../shared/loadingbox/LoadingBox';
 import { MessageBox } from '../../../shared/messagebox/MessageBox';
-import { ORDER_PAY_RESET } from '../../../redux/constants/order';
+import { ButtonPaypal } from '../../../components/order/ButtonPaypal';
+import { StripeButton } from '../../../components/order/StripeButton';
+import { useParams } from 'react-router-dom';
+import { detailsOrder } from '../../../redux/actions/order';
 export default function OrderDetailScreen() {
+
     const params = useParams();
     const dispatch = useDispatch();
 
     const orderDetails = useSelector((state) => state.orderDetails);
     const { loading, error, order } = orderDetails;
-    const orderPay = useSelector((state) => state.orderPay);
-    const { error: errorPay, loading: loadingPay, success: successPay } = orderPay;
-
-    const [clientId, setClientId] = useState(null);
-    const [sdkReady, setSdkReady] = useState(false);
+    
     useEffect(() => {
+        
+        dispatch(detailsOrder(params.id));
 
-        const getClientID = async () => {
+    }, [ dispatch, params.id ]);
 
-            const { data } = await axios.get(`/api/paypal`);
-            setClientId(data);
-            if (data) {
-                setSdkReady(true);
-            } else {
-                setSdkReady(false);
-            }
-
-        }
-        if ( !order || successPay || (order && order._id !== params.id) ) {
-            dispatch({type: ORDER_PAY_RESET});
-            dispatch(detailsOrder(params.id));
-        } else {
-            if (!order.isPaid) {
-                getClientID();
-                
-            } else {
-                setSdkReady(true);
-            }
-        }
-
-    }, [ dispatch, params.id, sdkReady, successPay, order ]);
-
-    const successPaymentHandler = ( paymentResult ) => {
-        // TODO: dispatch pay order
-        dispatch(payOrder(order, paymentResult));
-        //console.log(order, paymentResult);
-    }
     return loading ? (<LoadingBox />) :
         error ? (<MessageBox >{error}</MessageBox>) :
             (
@@ -60,7 +30,7 @@ export default function OrderDetailScreen() {
                         lg:flex-row lg:gap-x-5 mx-5 lg:gap-y-0
                     '>
 
-                        <div className='w-full lg:w-3/4 flex flex-col gap-y-5'>
+                        <div className='w-full lg:w-8/12 flex flex-col gap-y-5'>
 
                             <div className='transition ease-linear bg-white border rounded border-green-500 hover:border-green-700 duration-200 p-5 hover:shadow-xl'>
                                 <div className='mb-5'>
@@ -142,7 +112,7 @@ export default function OrderDetailScreen() {
 
                         </div>
 
-                        <div className='w-full lg:w-3/12 transition ease-linear bg-white border rounded border-green-500 hover:border-green-700 duration-200 p-5 hover:shadow-xl'>
+                        <div className='w-full lg:w-2/6 transition ease-linear bg-white border rounded border-green-500 hover:border-green-700 duration-200 p-5 hover:shadow-xl'>
 
                             <div className='flex flex-col gap-y-5'>
                                 <p className='font-bold text-gray-700 text-3xl'>Sumatoria</p>
@@ -152,23 +122,11 @@ export default function OrderDetailScreen() {
                                 <p className='w-full'>Total de la orden: <span className='float-right text-gray-700 font-semibold'>{ '$' + order.totalPrice.toFixed(2) }</span></p>
                                 <p className='w-full font-bold text-gray-700 my-5'> Código de orden: <span className='font-semibold'>{ order._id }</span></p>
 
-                                <div className='my-5 h-full'>
+                                <div className='my-2 h-full'>
                                     {
-                                        sdkReady
-                                            ?
-                                            (
-                                                <>
-                                                    {errorPay && <MessageBox>{errorPay}</MessageBox>}
-                                                    {loadingPay && <LoadingBox />}
-                                                    <PayPalButton
-                                                        amount={ order.totalPrice.toFixed(2) }
-                                                        options={{ clientId: clientId }}
-                                                        onSuccess={ successPaymentHandler }
-                                                    />
-                                                </>
-                                            )
-                                            :
-                                            (<div>cargando...</div>)
+                                        order.isPaid
+                                        ? <></> : 
+                                        (<Button order={order} />)
                                     }
                                 </div>
 
@@ -178,4 +136,19 @@ export default function OrderDetailScreen() {
                     </div>
                 </div>
             )
+}
+
+const Button = ({ order }) => {
+
+    switch( order.paymentMethod ){
+        case 'Paypal':
+            return (<ButtonPaypal order={ order } />);
+
+        case 'Stripe':
+            return (<StripeButton order={ order } />);
+
+        default:
+            return (<></>);
+    }
+
 }

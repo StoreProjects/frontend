@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckoutSteps } from '../../../shared/checkout/CheckoutSteps';
 import { saveShippingAddress } from '../../../redux/actions/cart';
@@ -13,13 +13,7 @@ export default function ShippingScreen() {
     if ( !userInfo ){
         navigate('/login', { replace: true });
     }
-    const [state, setState] = useState({
-        fullName: '' || shippingAddress.fullName,
-        address: '' || shippingAddress.address,
-        city: '' || shippingAddress.city,
-        postalCode: '' || shippingAddress.postalCode,
-        country: '' || shippingAddress.country
-    });
+    const [state, setState] = useState(shippingAddress);
     const onChange = (value, campo) => {
         setState({
             ...state,
