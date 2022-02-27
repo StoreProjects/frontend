@@ -13,6 +13,7 @@
     "ag-grid-community": "^26.2.1",
     "ag-grid-react": "^26.2.0",
     "axios": "^0.24.0",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-paypal-button-v2": "^2.6.3",

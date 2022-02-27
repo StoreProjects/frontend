@@ -8,11 +8,11 @@ export default function ProductScreen() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const state = useSelector((state) => state.productListOne);
-    const { loading, error, product } = state;
+    const { loading, error, product, success } = state;
     const [qty, setQty] = useState(1);
     useEffect(() => {
-        dispatch(listOneProduct(String(params.id)))
-    }, [dispatch, params.id]);
+        dispatch(listOneProduct(String(params.id)));
+    }, [dispatch, params.id, success]);
 
     const AddToCartHandle = () => {
         navigate(`/cart/${ product._id }?qty=${ qty }`);
@@ -34,9 +34,9 @@ export default function ProductScreen() {
                                         alt="IMG_PRODUCT"
                                     />
                                     <div className='flex flex-row justify-center gap-x-4 mt-5'>
-                                        <div className='w-3/12 h-24 shadow-2xl bg-white'>imagen de prueba</div>
-                                        <div className='w-3/12 shadow-2xl bg-white'>imagen de prueba</div>
-                                        <div className='w-3/12 shadow-2xl bg-white'>imagen de prueba</div>
+                                        <div className='w-3/12 h-24 shadow-2xl bg-white'></div>
+                                        <div className='w-3/12 shadow-2xl bg-white'></div>
+                                        <div className='w-3/12 shadow-2xl bg-white'></div>
                                     </div>
                                 </div>
                                 <div className='w-full lg:w-96'>
@@ -70,15 +70,32 @@ export default function ProductScreen() {
                                 </div>
                             </div>
                             <div className='container mx-auto mt-10'>
-                                <div className='flex flex-col justify-center mx-7'>
-                                    <div className='h-full text-center'>
-                                        <p className='font-semibold text-2xl'>Comentarios (1)</p>
+                                <div className="flex flex-col justify-center mx-7">
+                                    <div className="h-full my-6">
+                                        <p className="font-semibold text-2xl">{ product.comments.length } Comentarios</p>
                                     </div>
-                                    <div className='flex flex-col my-5'>
-                                        <CommentForm />
-                                        <Comment /> 
+
+                                    <CommentForm productId={ product._id } />
+
+                                    <div className='flex flex-col sm:flex-row flex-wrap'>
+                                        {/* <div className='w-2/4'>
+                                            h
+                                            </div> 
+                                        */}
+                                        
+                                        <div       
+                                            className='flex flex-col flex-wrap w-full gap-y-6'
+                                        >
+                                        {
+                                            product.comments.map((comment) => (
+                                                <Comment key={ comment._id } productId={ product._id } comment={ comment } />
+                                            ))
+                                        }
+                                        </div>
                                     </div>
+                                    <div className="flex flex-col my-5"></div>
                                 </div>
+                                
                             </div>
                         </div>
                     )
