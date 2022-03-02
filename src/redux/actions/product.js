@@ -63,7 +63,7 @@ export const listOneProduct = ( id ) => async ( dispatch ) => {
     
 }
 
-export const createComment = ( productId, text ) => async( dispatch, getState ) => {
+export const createComment = ( productId, text, rating ) => async( dispatch, getState ) => {
 
     dispatch({
         type: CREATE_COMMENT_PRODUCT_REQUEST,
@@ -74,7 +74,7 @@ export const createComment = ( productId, text ) => async( dispatch, getState ) 
 
         const { userSignin: { userInfo } } = getState();
         
-        const { data } = await axios.post(`/api/products/comment/${ productId }`, { text }, {
+        const { data } = await axios.post(`/api/products/comment/${ productId }`, { text, rating }, {
             headers: {
                 token: `${ userInfo.token }`
             }

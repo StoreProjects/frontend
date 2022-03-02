@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRating } from '../../../hooks/useRating';
 import { listOneProduct } from '../../../redux/actions/product';
 import { Comment, CommentForm } from '../../../components/product';
+import { Rating } from '../../../components/product/Rating';
 export default function ProductScreen() {
     const params = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const state = useSelector((state) => state.productListOne);
     const { loading, error, product, success } = state;
+    
+    const userSignin = useSelector((state) => state.userSignin);
+    const { userInfo } = userSignin;
+    
     const [qty, setQty] = useState(1);
     useEffect(() => {
         dispatch(listOneProduct(String(params.id)));
@@ -17,10 +23,24 @@ export default function ProductScreen() {
     const AddToCartHandle = () => {
         navigate(`/cart/${ product._id }?qty=${ qty }`);
     }
-    return (
-        <>
+
+    const { 
+        porcentajes
+    } = useRating( product && product.comments );
+
+    let productView;
+
+    if(loading) {
+        productView = <p>Cargando...</p>;
+    } else {
+
+        const AVG = (product.comments.reduce((a ,c) => a + ( c.rating ), 0) / product.comments.length);
+        const commentCount = product.comments.length;
+
+        productView = (
+            <>
             {
-                loading ? (<p>Cargando...</p>) : error ? (<p>Error...</p>) :
+                error ? (<p>Error...</p>) :
                     (
                         <div className='container mx-auto mt-10' key={product._id}>
                             <div className="
@@ -62,7 +82,7 @@ export default function ProductScreen() {
                                                 )
                                             }
                                         </select>
-
+        
                                         <button onClick={AddToCartHandle} className='mt-5 w-full transition ease-out bg-green-500 hover:bg-green-700 duration-300 text-white font-bold py-2 px-4 rounded'>
                                             Añadir al carro
                                         </button>
@@ -71,26 +91,30 @@ export default function ProductScreen() {
                             </div>
                             <div className='container mx-auto mt-10'>
                                 <div className="flex flex-col justify-center mx-7">
-                                    <div className="h-full my-6">
-                                        <p className="font-semibold text-2xl">{ product.comments.length } Comentarios</p>
-                                    </div>
-
-                                    <CommentForm productId={ product._id } />
-
-                                    <div className='flex flex-col sm:flex-row flex-wrap'>
-                                        {/* <div className='w-2/4'>
-                                            h
-                                            </div> 
-                                        */}
+        
+                                    <div className='flex flex-wrap gap-x-12 justify-center'>
+        
+                                        <div className='w-5/12'>
+                                            <Rating avg={ AVG } count={ commentCount } porcentajes={ porcentajes } />
+                                        </div> 
                                         
                                         <div       
-                                            className='flex flex-col flex-wrap w-full gap-y-6'
+                                            className='sm:w-5/12 flex flex-col flex-wrap w-full gap-y-6'
                                         >
-                                        {
-                                            product.comments.map((comment) => (
-                                                <Comment key={ comment._id } productId={ product._id } comment={ comment } />
-                                            ))
-                                        }
+                                          
+                                            <p className="font-semibold text-2xl">{ product.comments.length } Comentarios</p>
+                                            
+                                            {
+        
+                                                userInfo && <CommentForm productId={ product._id } />
+        
+                                            }
+        
+                                            {
+                                                product.comments.map((comment) => (
+                                                    <Comment key={ comment._id } productId={ product._id } comment={ comment } />
+                                                ))
+                                            }
                                         </div>
                                     </div>
                                     <div className="flex flex-col my-5"></div>
@@ -100,6 +124,11 @@ export default function ProductScreen() {
                         </div>
                     )
             }
-        </>
-    )
+            </>
+        );
+        
+    }
+
+    return productView;
+  
 }

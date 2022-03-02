@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
+import ReactStars from 'react-rating-stars-component';
 import { deleteComment, listOneProduct } from '../../redux/actions/product';
 const Comment = ({ productId, comment }) => {
     const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const Comment = ({ productId, comment }) => {
     }
 
     return (
-        <div className='w-2/4 bg-white rounded p-4 shadow-md'>
+        <div className='w-full bg-white rounded p-4 shadow-md'>
             <div className='flex flex-row'>
                 <div className='mr-5'>
                     <img
@@ -51,6 +52,18 @@ const Comment = ({ productId, comment }) => {
                     <p className='my-3 break-all'>
                         { comment.body }
                     </p>
+                    <div>
+                    <ReactStars 
+                        count={5}
+                        value={comment.rating}
+                        size={25}
+                        isHalf={true}
+                        emptyIcon={ <i className="far fa-star"></i> }
+                        halfIcon={ <i className="far fa-star-half"></i> }
+                        fullIcon={ <i className="fas fa-star"></i> }
+                        edit={false}
+                    />
+                    </div>
                 </div>
                 
             </div>
