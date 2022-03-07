@@ -105,7 +105,7 @@ export const deleteComment = ( productId, commentId ) => async( dispatch, getSta
 
         const { userSignin: { userInfo } } = getState();
         
-        const { data } = await axios.put(`/api/products/comment/${ productId }`, { commentId }, {
+        await axios.put(`/api/products/comment/${ productId }`, { commentId }, {
             headers: {
                 token: `${ userInfo.token }`,
             }

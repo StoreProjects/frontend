@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckoutSteps } from '../../../shared/checkout/CheckoutSteps';
 import { saveShippingAddress } from '../../../redux/actions/cart';

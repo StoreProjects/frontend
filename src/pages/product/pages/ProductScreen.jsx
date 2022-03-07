@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
+import Zoom from 'react-medium-image-zoom'
 import { useDispatch, useSelector } from 'react-redux';
 import { useRating } from '../../../hooks/useRating';
 import { listOneProduct } from '../../../redux/actions/product';
@@ -36,7 +37,6 @@ export default function ProductScreen() {
 
         const AVG = (product.comments.reduce((a ,c) => a + ( c.rating ), 0) / product.comments.length) || 0;
         const commentCount = product.comments.length;
-
         productView = (
             <>
             {
@@ -48,15 +48,40 @@ export default function ProductScreen() {
                             lg:flex lg:flex-row lg:justify-center lg:gap-x-10 lg:gap-y-0
                             ">
                                 <div className='w-full lg:w-96'>
-                                    <img
-                                        src={`${process.env.PUBLIC_URL}/img/${product.image}`}
-                                        className='shadow-xl p-8 w-3/4 mx-12 bg-white'
-                                        alt="IMG_PRODUCT"
-                                    />
+                                    
+                                    <Zoom>
+                                        <img
+                                            src={`${process.env.PUBLIC_URL}/img/${product.image}`}
+                                            className='shadow-xl p-8 w-3/4 mx-12 bg-white'
+                                            alt="IMG_PRODUCT"
+                                        />
+                                    </Zoom>
+                                    
                                     <div className='flex flex-row justify-center gap-x-4 mt-5'>
-                                        <div className='w-3/12 h-24 shadow-2xl bg-white'></div>
-                                        <div className='w-3/12 shadow-2xl bg-white'></div>
-                                        <div className='w-3/12 shadow-2xl bg-white'></div>
+                                        <Zoom>
+                                    
+                                            <img
+                                                src={`${process.env.PUBLIC_URL}/img/${product.image}`}
+                                                className='w-28 h-28 p-5 shadow-2xl bg-white'
+                                                alt="IMG_PRODUCT"
+                                            />
+                                        </Zoom>
+                                        <Zoom>
+                                    
+                                            <img
+                                                src={`${process.env.PUBLIC_URL}/img/${product.image}`}
+                                                className='w-28 h-28 p-5 shadow-2xl bg-white'
+                                                alt="IMG_PRODUCT"
+                                            />
+                                        </Zoom>
+                                        <Zoom>
+                                    
+                                            <img
+                                                src={`${process.env.PUBLIC_URL}/img/${product.image}`}
+                                                className='w-28 h-28 p-5 shadow-2xl bg-white'
+                                                alt="IMG_PRODUCT"
+                                            />
+                                        </Zoom>
                                     </div>
                                 </div>
                                 <div className='w-full lg:w-96'>
@@ -92,11 +117,11 @@ export default function ProductScreen() {
                             <div className='container mx-auto mt-10'>
                                 <div className="flex flex-col justify-center mx-7">
         
-                                    <div className='flex flex-wrap gap-x-12 justify-center'>
-        
-                                        <div className='w-5/12'>
+                                    <div className='gap-y-5 md:gap-y-0 flex flex-wrap gap-x-12 justify-center'>
+
+                                        <div className='w-full h-full md:w-5/12'>
                                             <Rating avg={ AVG } count={ commentCount } porcentajes={ porcentajes } />
-                                        </div> 
+                                        </div>
                                         
                                         <div       
                                             className='sm:w-5/12 flex flex-col flex-wrap w-full gap-y-6'
@@ -112,7 +137,7 @@ export default function ProductScreen() {
         
                                             {
                                                 product.comments.map((comment, index) => (
-                                                    <Comment key={ index } i={ index } productId={ product._id } comment={ comment } />
+                                                    <Comment key={ index } productId={ product._id } comment={ comment } />
                                                 ))
                                             }
                                         </div>

@@ -3,13 +3,13 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactStars from 'react-rating-stars-component';
 import { deleteComment } from '../../redux/actions/product';
-const Comment = ({ productId, comment, i }) => {
+const Comment = ({ productId, comment }) => {
     const dispatch = useDispatch();
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
 
     const deleteCommentHandle = () => {
-        dispatch(deleteComment( productId, comment._id, i ));
+        dispatch(deleteComment( productId, comment._id ));
     }
 
     return (
@@ -26,7 +26,7 @@ const Comment = ({ productId, comment, i }) => {
                 <div className='flex flex-col w-full'>
                     <div className='flex justify-between'>
                         <div className='flex'>
-                            <p className='font-semibold'>
+                            <p className='text-xs md:text-base font-semibold'>
                                 { comment.user.username }
                             </p>
                             <p className='text-xs mt-1 text-gray-500 mx-3'>
@@ -37,7 +37,7 @@ const Comment = ({ productId, comment, i }) => {
                             userInfo && userInfo.id === comment?.user.id  ? (
                                 <button
                                     type='button'
-                                    className='bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white px-1 border border-red-500 hover:border-transparent rounded'
+                                    className='bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white px-1 md:border md:border-red-500 hover:border-transparent rounded'
                                     onClick={ deleteCommentHandle }
                                 >
                                     <i className="far fa-trash-alt"></i>

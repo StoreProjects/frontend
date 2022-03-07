@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const useRating = ( comments = []) => {
 
     const a1 = comments.filter((c) => c.rating >= 0 && c.rating <= 1 ).length;
