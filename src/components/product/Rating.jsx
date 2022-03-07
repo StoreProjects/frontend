@@ -3,7 +3,6 @@ import ReactStars from 'react-rating-stars-component';
 
 export const Rating = ({ avg, count, porcentajes }) => {
     let numberStars = Math.round(avg);
-    console.log(porcentajes);
     return (
         <div className='border bg-white shadow-sm w-full h-96 px-5 py-2'>
             <p className='text-4xl font-semibold'>
@@ -31,7 +30,14 @@ export const Rating = ({ avg, count, porcentajes }) => {
                 <div className='flex w-full gap-x-3'>
                     <p className='text-cyan-700 w-28'>5 estrellas</p>
                     <div className='w-full border rounded bg-gray-200'>
-                        <div className="bg-yellow-300 h-full rounded" style={{ width: porcentajes.porcentaje5 }}></div>
+                        {
+                            porcentajes.porcentaje5 ? (
+                                <div className="bg-yellow-300 h-full rounded" style={{ width: porcentajes.porcentaje5 }}></div>
+                            ) : (
+                                <div className="bg-yellow-300 h-full rounded" style={{ width: '0%' }}></div>
+                            )
+                        }
+                        
                     </div>
                     <p  className='text-cyan-700 w-28'>
                         { porcentajes.porcentaje5 }%
@@ -41,7 +47,13 @@ export const Rating = ({ avg, count, porcentajes }) => {
                 <div className='flex w-full gap-x-3'>
                     <p className='text-cyan-700 w-28'>4 estrellas</p>
                     <div className='w-full border rounded bg-gray-200'>
-                        <div className="bg-yellow-300 h-full rounded" style={{ width: porcentajes.porcentaje4 }}></div>
+                        {
+                            porcentajes.porcentaje4 ? (
+                                <div className="bg-yellow-300 h-full rounded" style={{ width: porcentajes.porcentaje4 }}></div>
+                            ) : (
+                                <div className="bg-yellow-300 h-full rounded" style={{ width: '0%' }}></div>
+                            )
+                        }
                     </div>
                     <p  className='text-cyan-700 w-28'>
                         { porcentajes.porcentaje4 }%
@@ -51,7 +63,13 @@ export const Rating = ({ avg, count, porcentajes }) => {
                 <div className='flex w-full gap-x-3'>
                     <p className='text-cyan-700 w-28'>3 estrellas</p>
                     <div className='w-full border rounded bg-gray-200'>
-                        <div className="bg-yellow-300 h-full rounded" style={{ width: porcentajes.porcentaje3 }}></div>
+                        {
+                            porcentajes.porcentaje3 ? (
+                                <div className="bg-yellow-300 h-full rounded" style={{ width: porcentajes.porcentaje3 }}></div>
+                            ) : (
+                                <div className="bg-yellow-300 h-full rounded" style={{ width: '0%' }}></div>
+                            )
+                        }
                     </div>
                     <p  className='text-cyan-700 w-28'>
                         { porcentajes.porcentaje3 }%
@@ -61,7 +79,13 @@ export const Rating = ({ avg, count, porcentajes }) => {
                 <div className='flex w-full gap-x-3'>
                     <p className='text-cyan-700 w-28'>2 estrellas</p>
                     <div className='w-full border rounded bg-gray-200'>
-                        <div className="bg-yellow-300 h-full rounded" style={{ width: porcentajes.porcentaje2 }}></div>
+                        {
+                            porcentajes.porcentaje2 ? (
+                                <div className="bg-yellow-300 h-full rounded" style={{ width: porcentajes.porcentaje2 }}></div>
+                            ) : (
+                                <div className="bg-yellow-300 h-full rounded" style={{ width: '0%' }}></div>
+                            )
+                        }
                     </div>
                     <p  className='text-cyan-700 w-28'>
                         { porcentajes.porcentaje2 }%
@@ -71,7 +95,13 @@ export const Rating = ({ avg, count, porcentajes }) => {
                 <div className='flex w-full gap-x-3'>
                     <p className='text-cyan-700 w-28'>1 estrellas</p>
                     <div className='w-full border rounded bg-gray-200'>
-                        <div className="bg-yellow-300 h-full rounded" style={{ width: porcentajes.porcentaje1 }}></div>
+                        {
+                            porcentajes.porcentaje1 ? (
+                                <div className="bg-yellow-300 h-full rounded" style={{ width: porcentajes.porcentaje1 }}></div>
+                            ) : (
+                                <div className="bg-yellow-300 h-full rounded" style={{ width: '0%' }}></div>
+                            )
+                        }
                     </div>
                     <p  className='text-cyan-700 w-28'>
                         { porcentajes.porcentaje1 }%

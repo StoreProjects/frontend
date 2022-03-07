@@ -10,7 +10,7 @@ export default function ProductScreen() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const state = useSelector((state) => state.productListOne);
-    const { loading, error, product, success } = state;
+    const { loading, error, product } = state;
     
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
@@ -18,7 +18,7 @@ export default function ProductScreen() {
     const [qty, setQty] = useState(1);
     useEffect(() => {
         dispatch(listOneProduct(String(params.id)));
-    }, [dispatch, params.id, success]);
+    }, [dispatch, params.id]);
 
     const AddToCartHandle = () => {
         navigate(`/cart/${ product._id }?qty=${ qty }`);
@@ -34,13 +34,13 @@ export default function ProductScreen() {
         productView = <p>Cargando...</p>;
     } else {
 
-        const AVG = (product.comments.reduce((a ,c) => a + ( c.rating ), 0) / product.comments.length);
+        const AVG = (product.comments.reduce((a ,c) => a + ( c.rating ), 0) / product.comments.length) || 0;
         const commentCount = product.comments.length;
 
         productView = (
             <>
             {
-                error ? (<p>Error...</p>) :
+                error ? (<p>{ error }</p>) :
                     (
                         <div className='container mx-auto mt-10' key={product._id}>
                             <div className="
@@ -111,8 +111,8 @@ export default function ProductScreen() {
                                             }
         
                                             {
-                                                product.comments.map((comment) => (
-                                                    <Comment key={ comment._id } productId={ product._id } comment={ comment } />
+                                                product.comments.map((comment, index) => (
+                                                    <Comment key={ index } i={ index } productId={ product._id } comment={ comment } />
                                                 ))
                                             }
                                         </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import ReactStars from 'react-rating-stars-component';
-import { createComment, listOneProduct } from '../../redux/actions/product';
+import { createComment } from '../../redux/actions/product';
 export const CommentForm = ({ productId }) => {
 
   const dispatch = useDispatch();
@@ -11,9 +11,9 @@ export const CommentForm = ({ productId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createComment( productId, body, rating )).then(() => {
-      dispatch(listOneProduct(String(productId)));
-    });
+    setBody('');
+    setRating(0);
+    dispatch(createComment( productId, body, rating ));
   }
 
   return (
@@ -28,6 +28,7 @@ export const CommentForm = ({ productId }) => {
             placeholder="Ingrese un comentario..."
             name="body"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            value={ body }
             onChange={({ target }) => setBody( target.value )}
           />
 
@@ -38,7 +39,7 @@ export const CommentForm = ({ productId }) => {
           <ReactStars 
             count={5}
             onChange={(rate) => setRating( rate )}
-            value={0}
+            value={rating}
             size={30}
             isHalf={true}
             emptyIcon={ <i className="far fa-star"></i> }

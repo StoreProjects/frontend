@@ -2,16 +2,14 @@ import React from 'react';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactStars from 'react-rating-stars-component';
-import { deleteComment, listOneProduct } from '../../redux/actions/product';
-const Comment = ({ productId, comment }) => {
+import { deleteComment } from '../../redux/actions/product';
+const Comment = ({ productId, comment, i }) => {
     const dispatch = useDispatch();
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
 
     const deleteCommentHandle = () => {
-        dispatch(deleteComment( productId, comment._id )).then(() => {
-            dispatch(listOneProduct( productId ));
-        });
+        dispatch(deleteComment( productId, comment._id, i ));
     }
 
     return (
@@ -22,7 +20,7 @@ const Comment = ({ productId, comment }) => {
                         src={`${ comment.user.image }`}
                         alt={`${ comment.user.username }_img`}
                         className={`w-14 max-w-full rounded-full`}
-                        title={`${ comment.user.username }`}
+                        title={`${ comment.user._id }`}
                     />
                 </div>
                 <div className='flex flex-col w-full'>

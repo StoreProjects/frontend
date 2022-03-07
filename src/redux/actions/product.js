@@ -67,7 +67,6 @@ export const createComment = ( productId, text, rating ) => async( dispatch, get
 
     dispatch({
         type: CREATE_COMMENT_PRODUCT_REQUEST,
-        payload: productId
     });
 
     try {
@@ -79,7 +78,7 @@ export const createComment = ( productId, text, rating ) => async( dispatch, get
                 token: `${ userInfo.token }`
             }
         });
-
+        
         dispatch({
             type: CREATE_COMMENT_PRODUCT_SUCCESS,
             payload: data
@@ -100,7 +99,6 @@ export const deleteComment = ( productId, commentId ) => async( dispatch, getSta
 
     dispatch({
         type: DELETE_COMMENT_PRODUCT_REQUEST,
-        payload: productId
     });
 
     try {
@@ -115,7 +113,7 @@ export const deleteComment = ( productId, commentId ) => async( dispatch, getSta
 
         dispatch({
             type: DELETE_COMMENT_PRODUCT_SUCCESS,
-            payload: data
+            payload: commentId
         });
 
     } catch ( error ) {
