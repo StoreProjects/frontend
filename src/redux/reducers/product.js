@@ -5,6 +5,9 @@ import {
     PRODUCT_LISTONE_REQUEST,
     PRODUCT_LISTONE_FAIL,
     PRODUCT_LISTONE_SUCCESS,
+    PRODUCT_CATEGORY_LIST_REQUEST,
+    PRODUCT_CATEGORY_LIST_SUCCESS,
+    PRODUCT_CATEGORY_LIST_FAIL,
     CREATE_COMMENT_PRODUCT_REQUEST,
     CREATE_COMMENT_PRODUCT_SUCCESS,
     CREATE_COMMENT_PRODUCT_FAIL,
@@ -128,6 +131,35 @@ export const productListOneReducer = ( state = INITIAL_STATE, action ) => {
         default:
             return state;
 
+    }
+
+}
+
+export const productListCateReducer = ( state = { loading: true, error: '', products: [] }, action ) => {
+
+    switch (action.type) {
+        case PRODUCT_CATEGORY_LIST_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+
+        case PRODUCT_CATEGORY_LIST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                products: action.payload
+            }
+
+        case PRODUCT_CATEGORY_LIST_FAIL:
+            return {
+                ...state,
+                loading: true,
+                error: action.payload
+            }
+    
+        default:
+            return state;
     }
 
 }

@@ -6,6 +6,9 @@ import {
     PRODUCT_LISTONE_REQUEST,
     PRODUCT_LISTONE_SUCCESS,
     PRODUCT_LISTONE_FAIL,
+    PRODUCT_CATEGORY_LIST_REQUEST,
+    PRODUCT_CATEGORY_LIST_SUCCESS,
+    PRODUCT_CATEGORY_LIST_FAIL,
     CREATE_COMMENT_PRODUCT_REQUEST,
     CREATE_COMMENT_PRODUCT_SUCCESS,
     CREATE_COMMENT_PRODUCT_FAIL,
@@ -125,6 +128,32 @@ export const deleteComment = ( productId, commentId ) => async( dispatch, getSta
             : error.message,
         });
 
+    }
+
+}
+
+export const listProductCategory = ( category, limit, order = 'new' ) => async( dispatch ) => {
+
+    dispatch({
+        type: PRODUCT_CATEGORY_LIST_REQUEST
+    });
+
+    try {
+
+        const { data } = await axios.get(`/api/products/${ category }/limit/${ limit }/${ order }`)
+
+        dispatch({
+            type: PRODUCT_CATEGORY_LIST_SUCCESS,
+            payload: data
+        });
+
+    } catch ( error ) {
+        dispatch({
+            type: PRODUCT_CATEGORY_LIST_FAIL,
+            payload: error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+        });
     }
 
 }

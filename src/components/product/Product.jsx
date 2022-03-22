@@ -21,9 +21,9 @@ export const Product = ({ product }) => {
             >
                 <button
                     className='
-                transition ease-in-out w-full bg-green-500 hover:bg-green-700 duration-300
-                text-white font-bold text-xl py-2 justify-self-center
-            '>
+                    transition ease-in-out w-full bg-green-500 hover:bg-green-700 duration-300
+                    text-white font-bold text-xl py-2 justify-self-center
+                '>
                     Comprar
                 </button>
             </Link>

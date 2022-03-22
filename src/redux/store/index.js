@@ -5,10 +5,20 @@ ApplyMiddleware=
 compose=Allows to show our store on the dev browser.
 */
 import thunk from 'redux-thunk'; //Allows to do AJAX request in our redux actions.
-import { productListReducer, productListOneReducer } from '../reducers/product';
+import {
+    productListReducer,
+    productListOneReducer,
+    productListCateReducer
+} from '../reducers/product';
 import { cartReducer } from '../reducers/cart';
 import { userLoginReducer } from '../reducers/user';
-import { orderCreateReducer, orderDetailsReducer, orderMineListReducer, orderPayReducer } from '../reducers/order';
+import { 
+    orderCreateReducer,
+    orderDetailsReducer,
+    orderMineListReducer,
+    orderPayReducer }
+from '../reducers/order';
+
 const initialState = {
     userSignin: {
         userInfo: localStorage.getItem('userInfo')
@@ -35,6 +45,7 @@ const initialState = {
 const reducer = combineReducers({
     productList: productListReducer,
     productListOne: productListOneReducer,
+    productListCategory: productListCateReducer,
     cart: cartReducer,
     userSignin: userLoginReducer,
     orderCreate: orderCreateReducer,

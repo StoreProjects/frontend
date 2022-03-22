@@ -28,11 +28,6 @@ export default function HomeScreen() {
                         Agrega nuevas categorías. Rankea las compras. Recibe
                         notificaciones.
                     </p>
-                    <button
-                        className="transition ease-in-out bg-transparent border border-green-500 text-green-500 hover:bg-green-700 hover:text-white font-bold py-2 px-4 rounded duration-300"
-                    >
-                        Empezar a explorar
-                    </button>
                 </div>
                 <div className='order-1 mb-8 md:mb-0 md:order-2'>
                     <img src={shopping} alt="" />

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { Footer } from '../footer/Footer';
 import { logout } from '../../redux/actions/user';
+import axios from 'axios';
 export const Navbar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -13,6 +13,9 @@ export const Navbar = () => {
     const { userInfo } = userSignin;
     const [toggle, setToggle] = useState(false);
     const [drop, setDrop] = useState(false);
+    const [touched, setTouched] = useState(false);
+    const [results, setResults] = useState(false);
+    const inputRef = useRef(null);
     const wrapperRef = useRef(null);
     useEffect(() => {
         /**
@@ -51,7 +54,30 @@ export const Navbar = () => {
         } else {
             setDrop(true);
         }
+
     }
+
+    const searchToggle = () => {
+        inputRef.current.value = '';
+        if(touched) {
+            setTouched(false);
+        } else {
+            setTouched(true);
+        }
+    }
+
+    // INPUT TEXT
+    const searchHandle = async (e) => {
+        if(e.target.value === '') return;
+        const { data } = await axios.get(`/api/products/category/${e.target.value}`);
+        
+        if( data ) {
+            setTimeout(() => {
+                setResults(data);
+            }, 2000);
+        }
+    }
+
     return (
         <main className='flex flex-col min-h-screen'>
             <nav className='bg-slate-50 p-6 shadow-md'>
@@ -67,25 +93,16 @@ export const Navbar = () => {
                 `}
                 >
                     <Link
-                        className='lg:order-3 transition ease-in-out font-body font-bold text-4xl text-green-700 hover:text-green-500 hover:-translate-y-1 hover:scale-110 duration-300'
-                        to='/'>Shopping Star</Link>
-                    <Link
-                        to='#'
-                        className='lg:order-1 transition ease-in-out font-medium text-green-700 hover:text-green-500 hover:-translate-y-1 hover:scale-110 text-lg duration-300'
-                    >
-                        Opciones
-                    </Link>
-                    <Link
-                        className='lg:order-2 transition ease-in-out font-medium text-green-700 hover:text-green-500 hover:-translate-y-1 hover:scale-110 text-lg duration-300'
-                        to='/explorer'>Explorar</Link>
-                    <Link
                         to='/cart'
-                        className='lg:order-4 relative transition ease-in-out font-medium text-green-700 hover:text-green-500 hover:-translate-y-1 hover:scale-110 text-lg duration-300'
+                        className='order-2 md:order-none relative transition ease-in-out font-medium text-green-700 hover:text-green-500 hover:-translate-y-1 hover:scale-110 text-lg duration-300'
                     >
                         Carrito
                         <span className='absolute bg-red-700 text-white rounded-full w-5 text-sm text-center' style={{ top: '-3px' }} id="lblCartCount"
                         >{cartItems.length}</span>
                     </Link>
+                    <Link
+                        className='order-1 md:order-none transition ease-in-out font-body font-bold text-4xl text-green-700 hover:text-green-500 hover:-translate-y-1 hover:scale-110 duration-300'
+                        to='/'>Shopping Star</Link>
                     {
                         userInfo ?
                             (
@@ -93,7 +110,7 @@ export const Navbar = () => {
                                     <Link
                                         to='#'
                                         onClick={logoutHandle}
-                                        className='md:hidden md:order-5 transition ease-in-out font-medium text-green-700 hover:text-green-500 hover:-translate-y-1 hover:scale-110 text-lg duration-300'
+                                        className='order-3 md:order-none md:hidden transition ease-in-out font-medium text-green-700 hover:text-green-500 hover:-translate-y-1 hover:scale-110 text-lg duration-300'
                                     >
                                         Cerrar sesión
                                     </Link>
@@ -155,23 +172,50 @@ export const Navbar = () => {
                             ) :
                             (
                                 <Link
-                                    className='lg:order-5 transition ease-in-out font-medium text-green-700 hover:text-green-500 hover:-translate-y-1 hover:scale-110 text-lg duration-300'
+                                    className='order-3 md:order-none transition ease-in-out font-medium text-green-700 hover:text-green-500 hover:-translate-y-1 hover:scale-110 text-lg duration-300'
                                     to='/login'>Iniciar sesión</Link>
                             )
                     }
                 </div>
-                <div className={`my-3 ${toggle ? 'flex' : 'hidden md:flex'} mt-5 gap-x-2 md:mt-8 md:mx-40 md:gap-x-5`}>
-                    <input
-                        type="text"
-                        className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        placeholder='Buscar producto'
-                    />
+                <div className={`${toggle ? 'flex' : 'hidden md:flex'} mt-5 gap-x-2 md:mt-8 md:mx-40 md:gap-x-5`}>
+    
+                    <div className='w-full'>
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            placeholder='Buscar producto'
+                            onChange={searchHandle}
+                        />
+                        
+                        {
+                            results && (
+                                <div className='absolute w-2/3' >
+                                    <div className={`${ touched ? 'hidden' : ' bg-white shadow-md mr-10 h-full rounded p-5' } `}>
+                                        <ul>
+                                            {
+                                                results.map(( r, index ) => (
+                                                    <li key={index} onClick={searchToggle}>
+                                                        <Link to={`/explorer/${ r.name }`}>{ r.name }</Link>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            )
+                        }
+
+                    </div>
+
                     <button
-                        className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'
+                        className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded h-full'
                     >
                         Buscar
                     </button>
+        
                 </div>
+
             </nav>
             <section className='flex-1'>
                 <Outlet />
