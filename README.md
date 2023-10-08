@@ -1,6 +1,6 @@
 # Shopping Star
 
-Tienda online con metodos de pago como: Stipe y Paypal.
+Tienda online con metodos de pago como: Stripe y Paypal.
 
 ![image](https://user-images.githubusercontent.com/64493192/147842390-b39b63c3-cf50-4059-8033-713d5d81a5a4.png)
 ![image](https://user-images.githubusercontent.com/64493192/147842393-20d2b482-8f45-447a-aa01-8641fdd3d6f7.png)
