@@ -11,16 +11,16 @@ export function SocketProvider({ children }) {
 
     const [socket, setSocket] = useState();
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const newSocket = io(
-            'http://localhost:4001/api/socket',
-        )
-        setSocket(newSocket);
+    //     const newSocket = io(
+    //         'http://localhost:4001/api/socket',
+    //     )
+    //     setSocket(newSocket);
 
-        return () => newSocket.close();
+    //     return () => newSocket.close();
 
-    }, []);
+    // }, []);
 
     return (
         <SocketContext.Provider value={socket}>

@@ -15,6 +15,9 @@ import {
 } from '../constants/order';
 import { CART_EMPTY } from '../constants/cart';
 import { OrdersMine } from '../services/order-service/order';
+
+const URL = `${process.env.REACT_APP_SEIKO_API}`;
+
 export const createOrder = ( order ) => async ( dispatch, getState ) => {
 
     dispatch({
@@ -24,7 +27,7 @@ export const createOrder = ( order ) => async ( dispatch, getState ) => {
 
     try {
         const { userSignin: { userInfo } } = getState();
-        const { data } = await axios.post('/api/order', order, {
+        const { data } = await axios.post(`${URL}/api/order`, order, {
             headers: {
                 token: `${ userInfo.token }`
             }
@@ -60,7 +63,7 @@ export const detailsOrder = ( orderId ) => async ( dispatch, getState ) => {
 
         const { userSignin: { userInfo } } = getState();
         
-        const { data } = await axios.get(`/api/order/${ orderId }`, {
+        const { data } = await axios.get(`${URL}/api/order/${ orderId }`, {
             headers: {
                 token: `${ userInfo.token }`
             }
@@ -98,7 +101,7 @@ export const payOrder = ( order, paymentResult ) => async ( dispatch, getState )
 
     try {
         
-        const { data } = await axios.put(`/api/order/${ order._id }/pay`, paymentResult, {
+        const { data } = await axios.put(`${URL}/api/order/${ order._id }/pay`, paymentResult, {
             headers: {
                 token: `${ userInfo.token }`
             }
@@ -136,7 +139,7 @@ export const payOrderStripe = ( order, paymentResult ) => async ( dispatch, getS
 
     try {
         
-        const { data } = await axios.put(`/api/order/${ order._id }/stripe`, paymentResult, {
+        const { data } = await axios.put(`${URL}/api/order/${ order._id }/stripe`, paymentResult, {
             headers: {
                 token: `${ userInfo.token }`
             }

@@ -18,6 +18,8 @@ import {
 } 
 from '../constants/product';
 
+const URL = `${process.env.REACT_APP_SEIKO_API}`;
+
 export const listProducts = () => async (dispatch) => {
     
     dispatch({
@@ -26,7 +28,7 @@ export const listProducts = () => async (dispatch) => {
 
     try {
         
-        const { data } = await axios.get(`/api/products/`);
+        const { data } = await axios.get(`${URL}/api/products/`);
 
         dispatch({
             type: PRODUCT_LIST_SUCCESS,
@@ -50,7 +52,7 @@ export const listOneProduct = ( id ) => async ( dispatch ) => {
 
     try {
         
-        const { data } = await axios.get(`/api/products/${ id }`);
+        const { data } = await axios.get(`${URL}/api/products/${ id }`);
 
         dispatch({
             type: PRODUCT_LISTONE_SUCCESS,
@@ -76,7 +78,7 @@ export const createComment = ( productId, text, rating ) => async( dispatch, get
 
         const { userSignin: { userInfo } } = getState();
         
-        const { data } = await axios.post(`/api/products/comment/${ productId }`, { text, rating }, {
+        const { data } = await axios.post(`${URL}/api/products/comment/${ productId }`, { text, rating }, {
             headers: {
                 token: `${ userInfo.token }`
             }
@@ -108,7 +110,7 @@ export const deleteComment = ( productId, commentId ) => async( dispatch, getSta
 
         const { userSignin: { userInfo } } = getState();
         
-        await axios.put(`/api/products/comment/${ productId }`, { commentId }, {
+        await axios.put(`${URL}/api/products/comment/${ productId }`, { commentId }, {
             headers: {
                 token: `${ userInfo.token }`,
             }
@@ -140,7 +142,7 @@ export const listProductCategory = ( category, limit, order = 'new' ) => async( 
 
     try {
 
-        const { data } = await axios.get(`/api/products/${ category }/limit/${ limit }/${ order }`)
+        const { data } = await axios.get(`${URL}/api/products/${ category }/limit/${ limit }/${ order }`)
 
         dispatch({
             type: PRODUCT_CATEGORY_LIST_SUCCESS,
