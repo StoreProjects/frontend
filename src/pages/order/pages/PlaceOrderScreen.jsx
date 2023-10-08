@@ -99,8 +99,8 @@ export default function PlaceOrderScreen() {
                                                     <img
                                                         src={`${process.env.PUBLIC_URL}/img/${product.image}`}
                                                         alt="Img_product"
-                                                        className='mx-5'
-                                                        style={{ width: '15%', height: '7rem' }}
+                                                        className='mx-5 w-32'
+                                                        
                                                     />
                                                     <p className='w-56 break-words font-bold'>{product.name}</p>
                                                     <p className='font-bold text-gray-700'>
